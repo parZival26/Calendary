@@ -83,6 +83,7 @@ DATABASES = MYSQL
 
 
 AUTH_USER_MODEL = 'accounts.User'
+LOGIN_REDIRECT_URL = '/'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -120,7 +121,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFIELS_DIRS = [
-    
+
 ]
 
 # Default primary key field type
