@@ -30,7 +30,7 @@ class RegisterViewTest(TestCase):
         # Puedes agregar más aserciones según las necesidades de tu aplicación
 
         # Verifica que el redireccionamiento sea al URL esperado
-        self.assertRedirects(response, reverse('home'))
+        self.assertRedirects(response, reverse('list tasks'))
 
 class LoginViewTest(TestCase):
     def setUp(self):
@@ -58,4 +58,4 @@ class LoginViewTest(TestCase):
         # Puedes agregar más aserciones según las necesidades de tu aplicación
 
         # Verifica que el redireccionamiento sea al URL esperado (por ejemplo, el dashboard)
-        self.assertRedirects(response, reverse('home'))
+        self.assertRedirects(response, reverse('list tasks'))

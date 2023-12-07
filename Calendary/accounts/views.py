@@ -20,7 +20,7 @@ class Login(LoginView):
 class Register(CreateView):
     form_class = UserCreationForm
     template_name = "accounts/form.html"
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('list tasks')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

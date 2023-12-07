@@ -1,0 +1,11 @@
+<h1>Lista de Tareas</h1>
+
+<ul>
+  {% for task in object_list %}
+  <li>
+    <strong>{{ task.title }}</strong><br />
+    Descripción: {{ task.description }}<br />
+    Fecha de vencimiento: {{ task.due_date }}
+  </li>
+  {% endfor %}
+</ul>
