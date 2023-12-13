@@ -10,9 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+import datetime
 from pathlib import Path
 from decouple import config
 import os
+
+from django.urls import reverse_lazy
 
 from .db import HOST, NAME, PASSWORD, PORT, USER
 
@@ -41,10 +44,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
     'home',
     'accounts',
     'eventhub',
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -99,7 +106,8 @@ DATABASES = {
 
 
 AUTH_USER_MODEL = 'accounts.User'
-LOGIN_REDIRECT_URL = 'list tasks'
+date = datetime.datetime.now()
+LOGIN_REDIRECT_URL = reverse_lazy('calendar', kwargs={'year': date.year, 'month': date.month})
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -137,11 +145,10 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFIELS_DIRS = [
-
+    os.path.join(BASE_DIR, 'eventhub/')
 ]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-

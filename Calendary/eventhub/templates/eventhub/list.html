@@ -1,11 +1,55 @@
-<h1>Lista de Tareas</h1>
-
-<ul>
-  {% for task in object_list %}
-  <li>
-    <strong>{{ task.title }}</strong><br />
-    Descripción: {{ task.description }}<br />
-    Fecha de vencimiento: {{ task.due_date }}
-  </li>
-  {% endfor %}
-</ul>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% load static %}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="{% static "eventhub/js/list.js" %}"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="modal-title-bar">
+      <h2>Lista de tareas</h2>
+      <span class="close">&times;</span>
+    </div>
+    {% if object_list %}
+    <ul>
+      {% for task in object_list %}
+      {% if task.tags.all %}
+      <li class="tasks" style="border-left: 10px solid {{ task.tags.first.color }};">
+          <div class="task-info">
+              <strong>{{ task.title }}</strong><br />
+              Descripción: {{ task.description }}<br />
+              Fecha de vencimiento: {{ task.due_date }}<br />
+              Tags:
+              {% for tag in task.tags.all %}
+                  {{ tag.name }}
+                  {% if not forloop.last %},{% endif %}
+              {% endfor %}
+          </div>
+          <div class="task-options">
+              <button class='updateTaskBtn' data-task-id='{{ task.id }}'><i class='bx bxs-pencil'></i></button>
+              <button class='deleteTaskBtn' data-task-id='{{ task.id }}'><i class='bx bxs-trash-alt'></i></button>
+          </div>
+      </li>
+      {% else %}
+      <li class="tasks">
+          <div class="task-info">
+              <strong>{{ task.title }}</strong><br />
+              Descripción: {{ task.description }}<br />
+              Fecha de vencimiento: {{ task.due_date }}
+          </div>
+          <div class="task-options">
+              <button class='updateTaskBtn' data-task-id='{{ task.id }}'><i class='bx bxs-pencil'></i></button>
+              <button class='deleteTaskBtn' data-task-id='{{ task.id }}'><i class='bx bxs-trash-alt'></i></button>
+          </div>
+      </li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>No hay tareas para hoy</p>
+    {% endif %}
+  </body>
+</html>

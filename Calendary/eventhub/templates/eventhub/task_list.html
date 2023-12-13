@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% load static %}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="modal-title-bar">
+      <h2>Lista de Etiquetas</h2>
+      <div class="actions">
+        <span class="close">&times;</span>
+      </div>
+    </div>
+    <form method="get">
+      <div>
+        <label>State:</label>
+        <div>
+          {% for state in states %}
+          <input
+            type="checkbox"
+            id="state_{{ state.0 }}"
+            name="state"
+            value="{{ state.0 }}"
+          />
+          <label for="state_{{ state.0 }}">{{ state.1 }}</label>
+          {% endfor %}
+        </div>
+      </div>
+      <div>
+        <label>Tags:</label>
+        <div>
+          {% for tag in tags %}
+          <input
+            type="checkbox"
+            id="tag_{{ tag.id }}"
+            name="tags"
+            value="{{ tag.name }}"
+          />
+          <label for="tag_{{ tag.id }}">{{ tag.name }}</label>
+          {% endfor %}
+        </div>
+      </div>
+      <div>
+        <label for="date_range">Date Range:</label>
+        <select id="date_range" name="date_range">
+          <option value="">All</option>
+          <option value="today">Today</option>
+          <option value="this_week">This Week</option>
+          <option value="this_month">This Month</option>
+        </select>
+      </div>
+      <button id="apply-filters-btn" type="submit">Filter</button>
+    </form>
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Due Date</th>
+          <th>State</th>
+          <th>Tags</th>
+          <th>Users</th>
+          <th>Creation Date</th>
+          <th>mes</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for task in tasks %}
+        <tr>
+          <td>{{ task.title }}</td>
+          <td>{{ task.description }}</td>
+          <td>{{ task.due_date }}</td>
+          <td>{{ task.get_state_display }}</td>
+          <td>{% for tag in task.tags.all %} {{ tag.name }} {% endfor %}</td>
+          <td>
+            {% for user in task.users.all %} {{ user.username }} {% endfor %}
+          </td>
+          <td>{{ task.creation_date }}</td>
+          <td>{{ task.due_date.month }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="9">No tasks found</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>
