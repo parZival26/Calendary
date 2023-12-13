@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Home</title>
+  </head>
+  <body>
+    <h1>Welcome to the Home Page</h1>
+    <p>This is the home page of your Django project.</p>
+    {% if user.is_authenticated %}
+    <!-- Content for authenticated users -->
+    <a href="{% url "logout" %}">Logout</a>
+    <p>Welcome, {{ user.username }}!</p>
+    <!-- Other authenticated user content -->
+    {% else %}
+    <a href="{% url "login" %}">Login</a>
+    <a href="{% url "register" %}">Register </a>
+    {% endif %}
+  </body>
+</html>

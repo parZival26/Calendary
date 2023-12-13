@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% load static %}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="{% static "eventhub/js/tags.js" %}"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="modal-title-bar">
+      <h2>Lista de Etiquetas</h2>
+        <div class="actions">
+            <span id="createTagBtn" class="create">+</span>
+            <span class="close">&times;</span>
+        </div>
+    </div>
+    {% if object_list %}
+    <ul>
+      {% for tag in object_list %}
+      <li class="tasks">
+        <div class="tag-info">
+          <strong>{{ tag.name }}</strong><br />
+        Color: {{ tag.color }}<br />
+        <div style="width: 20px; height: 20px; background-color: {{tag.color}}; border: 1px solid #000;"></div>
+        </div>
+        <div class="task-options">
+            <button class='updateTaskBtn' data-tag-id='{{ tag.id }}'><i class='bx bxs-pencil'></i></button>
+            <button class='deleteTaskBtn' data-tag-id='{{ tag.id }}'><i class='bx bxs-trash-alt'></i></button>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>No hay etiquetas</p>
+    {% endif %}
+  </body>
+</html>

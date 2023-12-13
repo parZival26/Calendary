@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static "eventhub/css/style.css" %}">
+    <script src="{% static "eventhub/js/modal.js" %}"></script>
+    <script src="{% static "eventhub/js/task_list.js" %}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <title>Calendario</title>
+  </head>
+  <body>
+    <button id="calendar-view"><h2>{{ month_name }} {{ year }} Calendar</h2></button>
+    <div class="calendar-container">
+      <ul class="calendar">
+        <li class="day-header sun">Sun</li>
+        <li class="day-header mon">Mon</li>
+        <li class="day-header tue">Tue</li>
+        <li class="day-header wed">Wed</li>
+        <li class="day-header thu">Thu</li>
+        <li class="day-header fri">Fri</li>
+        <li class="day-header sat">Sat</li>
+        {% for week in calendar %} {% for day in week %} {% if day == 0 %}
+        <li class="empty-day"></li>
+        {% else %}
+        <li class="day">
+          <button class="date listTasksBtn" data-year="{{ day.year }}" data-month="{{ day.month}}" data-day="{{ day.day }}">{{ day.day }}</button>
+        </li>
+        {% endif %} {% endfor %} {% endfor %}
+      </ul>
+    </div>
+    <button id="createTaskBtn">Create Task</button>
+    <button id="listTagsBtn">Tags</button>
+    <button id="taskslistBtn">Tasks</button>
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>Hubo un error al cargar el modal</p>
+      </div>
+    </div>
+  </body>
+</html>

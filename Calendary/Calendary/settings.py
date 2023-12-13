@@ -10,10 +10,14 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+import datetime
 from pathlib import Path
 from decouple import config
-from .db import MYSQL
 import os
+
+from django.urls import reverse_lazy
+
+from .db import HOST, NAME, PASSWORD, PORT, USER
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,10 +44,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
     'home',
     'accounts',
     'eventhub',
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -79,10 +87,27 @@ WSGI_APPLICATION = 'Calendary.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = MYSQL
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": NAME,
+        "USER": USER,
+        "PASSWORD": PASSWORD,
+        "HOST": HOST,
+        "PORT": PORT,
+    },
+    'test': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / "test_db.sqlite3",
+    },
+}
+
+
 
 
 AUTH_USER_MODEL = 'accounts.User'
+date = datetime.datetime.now()
+LOGIN_REDIRECT_URL = reverse_lazy('calendar', kwargs={'year': date.year, 'month': date.month})
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -120,7 +145,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFIELS_DIRS = [
-    
+    os.path.join(BASE_DIR, 'eventhub/')
 ]
 
 # Default primary key field type
@@ -128,3 +153,13 @@ STATICFIELS_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+CRONJOBS = [
+    ('0 0 * * *', 'eventhub.utils.check_due_dates', '> /path/to/logfile.log')
+]
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
+EMAIL_USE_TLS = True

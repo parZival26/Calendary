@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% load static %}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="{% static "eventhub/js/form.js" %}"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="modal-title-bar">
+      <h2>{{ title }}</h2>
+      <span class="close">&times;</span>
+    </div>
+    <form method="POST" action="{{ form_action }}" id="{{ id }}">
+      {% csrf_token %} {{ form.as_p }}
+      <button type="submit" onclick="submitFormAndCloseModal('{{ id }}', event)">Create</button>
+    </form>
+  </body>
+</html>
