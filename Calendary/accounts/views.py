@@ -1,3 +1,5 @@
+import datetime
+from time import timezone
 from django.shortcuts import redirect, render
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import logout
@@ -20,7 +22,8 @@ class Login(LoginView):
 class Register(CreateView):
     form_class = UserCreationForm
     template_name = "accounts/form.html"
-    success_url = reverse_lazy('list tasks')
+    date = datetime.datetime.now()
+    success_url = reverse_lazy('calendar', kwargs={'year': date.year, 'month': date.month})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

@@ -1,6 +1,4 @@
 
-import time
-from typing import Any
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404, JsonResponse
 from django.urls import reverse, reverse_lazy
@@ -13,7 +11,7 @@ from calendar import SUNDAY, month, monthcalendar, setfirstweekday
 from datetime import datetime, timedelta
 from django.utils import timezone
 from django.contrib import messages
-
+from .utils import send_email
 
 class CalendarView(LoginRequiredMixin, TemplateView):
     template_name = 'eventhub/calendar.html'
@@ -113,6 +111,7 @@ class CreateTasksView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         response = super().form_valid(form)
         self.object.users.add(self.request.user)
+        send_email(self.object, self.request.user)
         response_data = {'message': 'Tarea creada exitosamente'}
         return JsonResponse(response_data)
 
