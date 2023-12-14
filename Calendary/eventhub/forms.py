@@ -10,7 +10,12 @@ class TaskForm(forms.ModelForm):
         fields = ['title', 'description', 'due_date', 'tags', 'state']
 
     def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
         super(TaskForm, self).__init__(*args, **kwargs)
+        
+        # Filtrar las etiquetas que pertenecen al usuario
+        if user:
+            self.fields['tags'].queryset = Tag.objects.filter(users=user)
         
         # Establecer el atributo 'class' para el widget de fecha
         self.fields['due_date'].widget.attrs['class'] = 'datepicker'
