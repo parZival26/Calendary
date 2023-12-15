@@ -227,3 +227,51 @@ body {
   color: black;
 
 }
+
+.modal-title-bar {
+    
+}
+
+.modal-title-bar h2 {
+    height: 80%;
+}
+
+.form_inputs {
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 4px;
+    width: 100%;
+}
+
+label {
+    font-size: 15px;
+    margin-top: 0px;
+}
+
+
+#createTaskForm {
+    width: 50%;
+  }
+  
+#createTaskForm button {
+  display: block; 
+  margin: 0 auto;
+  width: 30%;
+  padding: 10px;
+  font-size: 15px;
+  }
+
+#id_tags {
+  width: 100%;
+  padding: 8px;
+}
+
+#id_tags label {
+  display: flex;
+  align-items: center; 
+}
+
+#id_tags input {
+  width: 15px;
+}

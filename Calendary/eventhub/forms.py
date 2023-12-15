@@ -9,6 +9,10 @@ class TaskForm(forms.ModelForm):
         model = Task
         fields = ['title', 'description', 'due_date', 'tags', 'state']
 
+        widgets = {
+                'tags': forms.CheckboxSelectMultiple(),
+        }
+
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
         super(TaskForm, self).__init__(*args, **kwargs)
@@ -16,8 +20,13 @@ class TaskForm(forms.ModelForm):
         # Filtrar las etiquetas que pertenecen al usuario
         if user:
             self.fields['tags'].queryset = Tag.objects.filter(users=user)
+            
+
+        for field_name, field in self.fields.items():
+            field.widget.attrs["class"] = "form_inputs" 
         
         # Establecer el atributo 'class' para el widget de fecha
+        self.fields['due_date'].widget = forms.DateTimeInput(format='%d/%m/%Y %H:%M', attrs={'type': 'datetime-local'})
         self.fields['due_date'].widget.attrs['class'] = 'datepicker'
         
         # Crear un objeto FormHelper
@@ -41,3 +50,4 @@ class TagForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(TagForm, self).__init__(*args, **kwargs)
         self.fields['color'].widget.attrs['class'] = 'colorpicker'
+        self.fields['color'].widget = forms.TextInput(attrs={'type':'color', 'id':'id_color'})
