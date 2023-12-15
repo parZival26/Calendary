@@ -20,3 +20,25 @@ function submitFormAndCloseModal(formId, event) {
     }
   });
 }
+
+$(document).ready(function () {
+  // Attach a submit handler to the form
+  $('#id_color').submit(function () {
+      // Get the color value in RGB format
+      var rgbColor = $('#id_color').val();
+
+      // Convert RGB to hex
+      var hexColor = rgbToHex(rgbColor);
+
+      // Set the hex color back to the form field
+      $('#id_color').val(hexColor);
+  });
+
+  // Function to convert RGB to hex
+  function rgbToHex(rgb) {
+      var hex = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+      return "#" + ("0" + parseInt(hex[1], 10).toString(16)).slice(-2) +
+                     ("0" + parseInt(hex[2], 10).toString(16)).slice(-2) +
+                     ("0" + parseInt(hex[3], 10).toString(16)).slice(-2);
+  }
+});
