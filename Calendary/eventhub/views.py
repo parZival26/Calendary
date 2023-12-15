@@ -8,7 +8,7 @@ from django.core.exceptions import PermissionDenied
 from .models import Tag, Task
 from .forms import TagForm, TaskForm
 from calendar import SUNDAY, month, monthcalendar, setfirstweekday
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 from django.utils import timezone
 from django.contrib import messages
 from .utils import send_email
@@ -67,6 +67,7 @@ class TaskListView(LoginRequiredMixin, ListView):
         state = self.request.GET.getlist('state')
         tags = self.request.GET.getlist('tags')
         date_range = self.request.GET.get('date_range')
+        date_interval = self.request.GET.get('date_interval')
         if state:
             queryset = queryset.filter(state__in = state)
         if tags:
@@ -87,6 +88,15 @@ class TaskListView(LoginRequiredMixin, ListView):
                 last_day_of_month = (first_day_of_month + timedelta(days=32)).replace(day=1) - timedelta(days=1)
                 
                 queryset = queryset.filter(due_date__range=[first_day_of_month, last_day_of_month])
+
+        if date_interval:
+            today = timezone.now().date()
+            end_date = (timezone.make_aware(datetime.strptime(date_interval, '%Y-%m-%d')) + timedelta(days=1)).date()
+            if end_date < today:
+                print("La fecha final es anterior a la fecha actual. No se puede filtrar en el pasado.")
+            else:
+                print(f"today: {today}, end_date: {end_date}")
+                queryset = queryset.filter(due_date__range=[today, end_date])
 
         return queryset.order_by('due_date')
     

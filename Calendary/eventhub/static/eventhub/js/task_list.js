@@ -11,15 +11,18 @@ document.addEventListener("DOMContentLoaded", function() {
           var stateInputs = document.querySelectorAll('input[name="state"]:checked');
           var tagsInputs = document.querySelectorAll('input[name="tags"]:checked');
           var dateRangeInput = document.querySelector('select[name="date_range"]');
+          var dateIntervalInput = document.querySelector('input[name="date_interval"]');
       
           var state = Array.from(stateInputs).map(input => input.value);
           var tags = Array.from(tagsInputs).map(input => input.value);
           var date_range = dateRangeInput ? dateRangeInput.value : null;
+          var date_interval = dateIntervalInput ? dateIntervalInput.value : null;
       
           var data = {
             state: state,
             tags: tags,
-            date_range: date_range
+            date_range: date_range,
+            date_interval: date_interval
           };
       
           $.ajax({
