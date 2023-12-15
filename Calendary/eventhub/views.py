@@ -52,11 +52,11 @@ class ListTasksView(LoginRequiredMixin, ListView):
             raise Http404("Los parámetros 'day', 'month' y 'year' son obligatorios en la URL.")
 
         # Convertir los valores de year, month y day a un objeto datetime
-        due_date = timezone.datetime(year, month, day)
+        start_date = timezone.make_aware(timezone.datetime(year, month, day))
+        end_date = start_date + timezone.timedelta(days=1)
 
         # Filtrar las tareas por usuario, año, mes y día
-        return Task.objects.filter(users=self.request.user, due_date=due_date)
-    
+        return Task.objects.filter(users=self.request.user, due_date__range=(start_date, end_date))    
 class TaskListView(LoginRequiredMixin, ListView):
     model = Task
     template_name = 'task_list.html'
@@ -75,13 +75,14 @@ class TaskListView(LoginRequiredMixin, ListView):
             today = timezone.now().date()
 
             if date_range == 'today':
-                queryset = queryset.filter(due_date=today)
+                end_date = timezone.make_aware(timezone.datetime.combine(today, timezone.datetime.min.time())) + timezone.timedelta(days=1)
+                queryset = queryset.filter(due_date__range=[today, end_date])
             elif date_range == 'this_week':
-                start_week = today - timedelta(days=today.weekday())
+                start_week = timezone.make_aware(timezone.datetime.combine(today - timedelta(days=today.weekday()), timezone.datetime.min.time()))
                 end_week = start_week + timedelta(days=6)
                 queryset = queryset.filter(due_date__range=[start_week, end_week])
             elif date_range == 'this_month':
-                first_day_of_month = today.replace(day=1)
+                first_day_of_month = timezone.make_aware(timezone.datetime.combine(today.replace(day=1), timezone.datetime.min.time()))
                 # Obtener el último día del mes actual
                 last_day_of_month = (first_day_of_month + timedelta(days=32)).replace(day=1) - timedelta(days=1)
                 
