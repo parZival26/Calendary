@@ -1,4 +1,4 @@
-/* CSS */
+
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;800&display=swap");
 
 body {
@@ -7,6 +7,24 @@ body {
   align-items: center;
   font-family: "Poppins", serif;
 }
+
+#calendar-view {
+  color: rgb(0, 0, 0);
+  font-size: 1rem;
+  width: 18rem;
+  height: 5rem;
+  font-weight: 300;
+  font-size: 14px;
+  box-sizing: border-box;
+  background: rgba(196, 195, 195, 0.25);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+#calendar-view:hover {
+  background-color: rgba(36, 153, 199, 0.25);
+}
+
 
 .calendar-container .weeks-container .months-container {
   display: flex;
@@ -69,8 +87,7 @@ body {
     background-color: rgba(94, 94, 94, 0.25);
     border-radius: 10px;
     text-align: center;
-  
-    /* Añadido para centrar vertical y horizontalmente */
+
     display: flex;
     justify-content: center;
     align-items: center;
@@ -145,7 +162,7 @@ body {
   .modal-title-bar {
     display: flex;
     justify-content: space-between;
-    align-items: center; /* Puedes ajustar el color de fondo según tus preferencias */
+    align-items: center; 
     padding: 10px;
     border-bottom: 1px solid #ccc
   }
@@ -153,7 +170,7 @@ body {
   .tasks {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start; /* Alinea el contenido verticalmente al principio */
+    align-items: flex-start; 
     border: 1px solid #ccc;
     border-left: 10px solid #ccc;
     padding: 10px;
@@ -161,15 +178,13 @@ body {
   }
   .task-info {
       flex: 1;
-      /* Puedes agregar estilos adicionales según sea necesario */
   }
   .task-options {
       display: flex;
       align-items: center;
-      /* Alinea los elementos hijos verticalmente al centro */
   }
   .task-options button {
-      margin-left: 10px; /* Espacio entre los botones */
+      margin-left: 10px; 
       background-color: transparent;
       color: #aaa;
       border: none;
@@ -178,3 +193,37 @@ body {
   .task-options button :hover{
     color: black;
   }
+
+.todo {
+  display: flex;
+}
+
+.Botareas {
+  
+  width: 200px;
+  
+}
+
+.Botareas button {
+  width: 100%;
+  height: 8%;
+  margin-top: 10%;
+  color: rgb(0, 0, 0);
+  font-weight: 300;
+  font-size: 14px;
+  box-sizing: border-box;
+  background: rgba(175, 175, 175, 0.25);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.Botareas button:hover {
+  background-color: rgba(36, 153, 199, 0.25);
+  font-size: 18px;
+  
+}
+
+#createTaskBtn {
+  color: black;
+
+}

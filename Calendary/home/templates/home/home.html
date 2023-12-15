@@ -1,19 +1,28 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" href="{% static "eventhub/css/HomeStyle.css" %}">
     <title>Home</title>
   </head>
-  <body>
-    <h1>Welcome to the Home Page</h1>
-    <p>This is the home page of your Django project.</p>
-    {% if user.is_authenticated %}
-    <!-- Content for authenticated users -->
-    <a href="{% url "logout" %}">Logout</a>
-    <p>Welcome, {{ user.username }}!</p>
-    <!-- Other authenticated user content -->
-    {% else %}
-    <a href="{% url "login" %}">Login</a>
-    <a href="{% url "register" %}">Register </a>
-    {% endif %}
+  <body>    
+    <div class="iniciar">
+      <div class="text-animation">
+        <span>¡Bienvenido a calendario {{ user.username }}!</span>
+      {% if user.is_authenticated %}
+      <!-- Content for authenticated users -->
+      <a href="{% url "logout" %}">Logout</a>
+      <a>Continua</a>
+      <!-- Other authenticated user content -->
+      {% else %}
+      <p><span>Inicia con nosotros</span></p>
+      </div>
+      <div class="auth-links">
+        <a href="{% url "login" %}">Login</a>
+        <a href="{% url "register" %}">Register </a>
+      </div>
+      {% endif %} 
+    </div>
+    
   </body>
 </html>

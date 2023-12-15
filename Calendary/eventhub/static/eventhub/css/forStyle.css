@@ -1,0 +1,47 @@
+
+.datos {
+    text-align: center;
+    border: 1px solid gray;
+    width: 35%;
+    padding: 15px;
+    margin: 0 auto;
+    margin-top: 6%;
+    border-radius: 10px;
+}
+
+h2 {
+    color: #333333;
+    text-align: center;
+    font-family: 'Nunito', sans-serif;
+}
+
+form {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+input {
+    width: 80%;
+    padding: 8px;
+    margin-bottom: 10px;
+    font-family: 'Nunito', sans-serif;
+}
+
+button {
+    background-color: #ffffff;
+    color: #000000;
+    padding: 10px 20px;
+    border: 1px solid gray;
+    cursor: pointer;
+    border-radius: 10px;
+    display: block;
+    margin: 0 auto; 
+    width: 50%;
+    font-size: 15px;
+    font-family: 'Nunito', sans-serif;
+}
+
+button:hover {
+    background-color: #a9a9a9;
+    color: white;
+}

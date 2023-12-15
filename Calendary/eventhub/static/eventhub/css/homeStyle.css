@@ -1,0 +1,60 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;800&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500&display=swap');
+
+body {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  font-family: "Poppins", serif;
+  margin-top: 2%;
+}
+
+.iniciar {
+  border: 1px solid gray; 
+  background-color: #fafafa;
+  width: 40%;
+  border-radius: 10px;
+  display: flex;
+  flex-flow: column; 
+  align-items: center;
+  padding: 3%; 
+  margin-top: 100px;
+  color: #000000;
+}
+
+.text-animation {
+  font-size: 30px; 
+  color: #333333; 
+  text-align: center; 
+  margin-bottom: 10px; 
+}
+
+.text-animation p {
+  font-size: 26px; 
+  margin: 0; 
+}
+
+.auth-links {
+  display: flex; 
+  border-radius: 10px;
+}
+
+.iniciar a {
+  font-family: 'Nunito', sans-serif;
+  font-size: 20px;
+  color: #000000;
+  margin: 10px; 
+  text-decoration: none;
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+  border: 1px solid gray; 
+  
+}
+
+.iniciar a:hover {
+  font-family: 'Nunito', sans-serif;
+  background-color: #c9c9c9;
+  color: white;
+}
