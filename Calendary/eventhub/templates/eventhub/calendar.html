@@ -11,8 +11,15 @@
     <title>Calendario</title>
   </head>
   <body>
-    <button id="calendar-view"><h2>{{ month_name }} {{ year }} Calendar</h2></button>
-    <div class="calendar-container">
+    <button class="ButCalendario" id="calendar-view"><h2>{{ month_name }} {{ year }} Calendar</h2></button>
+    <div class="todo">
+      <div class="Botareas">
+        <button id="createTaskBtn">Create Task</button>
+        <button id="listTagsBtn">Tags</button>
+        <button id="taskslistBtn">Tasks</button>
+      </div>
+      
+      <div class="calendar-container">
       <ul class="calendar">
         <li class="day-header sun">Sun</li>
         <li class="day-header mon">Mon</li>
@@ -30,9 +37,9 @@
         {% endif %} {% endfor %} {% endfor %}
       </ul>
     </div>
-    <button id="createTaskBtn">Create Task</button>
-    <button id="listTagsBtn">Tags</button>
-    <button id="taskslistBtn">Tasks</button>
+    </div>
+    
+    
     <!-- The Modal -->
     <div id="myModal" class="modal">
       <!-- Modal content -->
