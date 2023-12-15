@@ -1,5 +1,0 @@
-NAME = "calendario"
-USER = "root"
-PASSWORD = "Gat0sM1au!"
-HOST = "localhost"
-PORT = "3306"
