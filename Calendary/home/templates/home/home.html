@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" href="{% static "eventhub/css/homeStyle.css" %}">
+    <link rel="stylesheet" href="{% static "home/css/homeStyle.css" %}">
     <title>Home</title>
   </head>
   <body>    
@@ -12,7 +12,7 @@
       {% if user.is_authenticated %}
       <!-- Content for authenticated users -->
       <a href="{% url "logout" %}">Logout</a>
-      <a>Continua</a>
+      <a href="{% url "calendar" year=year month=month %}">Continua</a>
       <!-- Other authenticated user content -->
       {% else %}
       <p><span>Inicia con nosotros</span></p>
