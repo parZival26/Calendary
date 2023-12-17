@@ -112,16 +112,94 @@ body {
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
   }
+
+  .infor {
+    display: flex;
+    border-collapse: collapse;
+  }
   
-  /* Modal Content/Box */
   .modal-content {
     border-radius: 10px;
     background-color: #fefefe;
-    margin: 5% auto; /* 15% from the top and centered */
+    margin: 5% auto; 
     padding: 20px;
     border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+    width: 80%; 
   }
+
+  .modal-content form {
+    background-color: rgb(255, 255, 255);
+    width: 20%;
+    margin: 10px;
+  }
+  
+  .modal-content form div {
+    padding: 4px;
+    display: flex;
+    margin: 5px;
+    align-items: center; 
+    width: 100%;
+    box-sizing: border-box;
+
+  }
+
+  .opState {
+    flex-direction: column;
+    background-color: #dedede;
+    border-radius: 10px;
+  }
+  
+  .cuadrosState {
+    flex-direction: column;
+    width: 60%;
+  }
+  
+  .opTags {
+    flex-direction: column;
+    background-color: #dedede;
+    border-radius: 10px;
+  }
+  
+  .cuadrosTags {
+    flex-direction: column;
+  }
+  
+  .modal-content form button {
+    display: block;
+    margin: 0 auto;
+  width: 70%;
+  padding: 12px;
+  font-size: 14px;
+  }
+
+  .modal-content table {
+    border-collapse: collapse; 
+    width: 80%;
+  }
+  
+  .modal-content table thead th {
+    padding: 10px;
+    border: 1px solid rgb(126, 126, 126); 
+  }
+  
+  .modal-content table tbody td {
+    padding: 10px;
+    border: 1px solid rgb(126, 126, 126); 
+  }
+  
+  .fecha {
+    background-color: #dedede;
+    border-radius: 10px;
+  }
+
+  .intervalo {
+    background-color: #dedede;
+    border-radius: 10px;
+  }
+
+.modal-title-bar h2 {
+    height: 80%;
+}
   
   /* The Close Button */
   .close {
@@ -228,14 +306,6 @@ body {
 
 }
 
-.modal-title-bar {
-    
-}
-
-.modal-title-bar h2 {
-    height: 80%;
-}
-
 .form_inputs {
     background-color: rgb(255, 255, 255);
     color: rgb(0, 0, 0);
@@ -248,7 +318,6 @@ label {
     font-size: 15px;
     margin-top: 0px;
 }
-
 
 #createTaskForm {
     width: 50%;
