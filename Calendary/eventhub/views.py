@@ -3,15 +3,18 @@ from django.db.models.base import Model as Model
 from django.http import Http404, JsonResponse
 from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.views.generic import ListView, TemplateView
+from django.views.generic import ListView, TemplateView, DetailView
 from django.core.exceptions import PermissionDenied
 from .models import Tag, Task
+from django.contrib.sites.shortcuts import get_current_site
 from .forms import TagForm, TaskForm
 from calendar import SUNDAY, month, monthcalendar, setfirstweekday
 from datetime import date, datetime, timedelta
 from django.utils import timezone
 from django.contrib import messages
 from .utils import send_email
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
 
 class CalendarView(LoginRequiredMixin, TemplateView):
     template_name = 'eventhub/calendar.html'
@@ -298,3 +301,25 @@ class DeleteTagView(LoginRequiredMixin, DeleteView):
         response_data = {'message': 'Hubo un error al eliminada la Etiqueta'}
         return JsonResponse(response_data, status=400)
         
+
+class ShareTaskView(LoginRequiredMixin, DetailView):
+    model = Task
+    template_name = 'eventhub/share_task.html'
+
+    def get(self, request, *args, **kwargs):
+        task = self.get_object()
+        current_site = get_current_site(request)
+        domain = current_site.domain
+        shared_link = request.build_absolute_uri(reverse('share_task_with_user', kwargs={'pk': task.pk}))
+
+        return render(request, self.template_name, {'task': task, 'shared_link': shared_link, 'domain': domain})
+    
+@login_required
+def share_task_with_user(request, pk):
+    task = get_object_or_404(Task, pk=pk)
+    
+    # Agrega el usuario actual a la lista de usuarios compartidos
+    task.users.add(request.user)
+    
+    # Redirige a la página de compartir tarea
+    return redirect('share_task', pk=pk)
