@@ -20,18 +20,6 @@ function loadModal(view, closeBtnSelector) {
               };
             }
 
-            var copyLinkBtn = document.querySelector(".copyLinkBtn");
-            if (copyLinkBtn) {
-              copyLinkBtn.onclick = function() {
-                var taskLink = this.getAttribute("data-link");
-                navigator.clipboard.writeText(taskLink).then(function() {
-                  console.log('Copying to clipboard was successful!');
-                }, function(err) {
-                  console.error('Could not copy text: ', err);
-                });
-              };
-            }
-
           },
           error: function() {
             console.log("Error al cargar la vista");

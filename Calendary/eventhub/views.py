@@ -6,7 +6,6 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, TemplateView, DetailView
 from django.core.exceptions import PermissionDenied
 from .models import Tag, Task
-from django.contrib.sites.shortcuts import get_current_site
 from .forms import TagForm, TaskForm
 from calendar import SUNDAY, month, monthcalendar, setfirstweekday
 from datetime import date, datetime, timedelta
@@ -65,6 +64,7 @@ class TaskListView(LoginRequiredMixin, ListView):
     model = Task
     template_name = 'task_list.html'
     context_object_name = 'tasks'
+    paginate_by = 5
 
     def get_queryset(self):
         queryset = super().get_queryset().filter(users=self.request.user)
@@ -301,18 +301,15 @@ class DeleteTagView(LoginRequiredMixin, DeleteView):
         response_data = {'message': 'Hubo un error al eliminada la Etiqueta'}
         return JsonResponse(response_data, status=400)
         
-
 class ShareTaskView(LoginRequiredMixin, DetailView):
     model = Task
     template_name = 'eventhub/share_task.html'
 
     def get(self, request, *args, **kwargs):
         task = self.get_object()
-        current_site = get_current_site(request)
-        domain = current_site.domain
-        shared_link = request.build_absolute_uri(reverse('share_task_with_user', kwargs={'pk': task.pk}))
+        shared_link = request.build_absolute_uri(reverse('share_task', kwargs={'pk': task.pk}))
 
-        return render(request, self.template_name, {'task': task, 'shared_link': shared_link, 'domain': domain})
+        return render(request, self.template_name, {'task': task, 'shared_link': shared_link})
     
 @login_required
 def share_task_with_user(request, pk):

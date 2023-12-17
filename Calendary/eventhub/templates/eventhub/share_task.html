@@ -3,12 +3,13 @@
   <head>
     {% load static %}
     <title>Compartir tarea</title>
+    <script src="{% static "eventhub/js/share_task.js" %}"></script>
   </head>
   <body>
     <div class="modal-title-bar">
-      <h2>Compartir tarea: {{ task.title }}</h2>
-      <span class="close">&times;</span>
-    </div>
+        <h2>Compartir tarea: {{ task.title }}</h2>
+        <span class="close">&times;</span>
+      </div>
     <p>{{ task.description }}</p>
     <p>Fecha de vencimiento: {{ task.due_date }}</p>
     <p>Estado: {{ task.get_state_display }}</p>
@@ -21,12 +22,6 @@
       {% endfor %}
     </ul>
 
-    <button
-      class="copyLinkBtn"
-      data-task-id="{{ task.id }}"
-      data-link="{{ domain }}{% url 'share_task_with_user' pk=task.pk %}"
-    >
-      Copiar Enlace
-    </button>
+    <button class="shareTaskWithUserBtn" data-task-id="{{ task.id }}" data-link="{% url 'share_task_with_user' pk=task.pk %}">Compartir con otro usuario</button>
   </body>
 </html>

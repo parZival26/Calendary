@@ -4,6 +4,8 @@
     {% load static %}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="{% static "eventhub/js/list.js" %}"></script>
     <title>Document</title>
   </head>
   <body>
@@ -19,24 +21,34 @@
           <label>State:</label>
           <div class="cuadrosState">
             {% for state in states %}
-              <div class="checkbox-option">
-                <input type="checkbox" id="state_{{ state.0 }}" name="state" value="{{ state.0 }}" />
-                <label for="state_{{ state.0 }}">{{ state.1 }}</label>
-              </div>
+            <div class="checkbox-option">
+              <input
+                type="checkbox"
+                id="state_{{ state.0 }}"
+                name="state"
+                value="{{ state.0 }}"
+              />
+              <label for="state_{{ state.0 }}">{{ state.1 }}</label>
+            </div>
             {% endfor %}
-          </div>  
+          </div>
         </div>
         <div class="opTags">
           <label>Tags:</label>
           <div class="cuadrosTags">
             {% for tag in tags %}
-              <div class="checkbox-option">
-                <input type="checkbox" id="tag_{{ tag.id }}" name="tags" value="{{ tag.name }}" />
-                <label for="tag_{{ tag.id }}">{{ tag.name }}</label>
-              </div>
+            <div class="checkbox-option">
+              <input
+                type="checkbox"
+                id="tag_{{ tag.id }}"
+                name="tags"
+                value="{{ tag.name }}"
+              />
+              <label for="tag_{{ tag.id }}">{{ tag.name }}</label>
+            </div>
             {% endfor %}
           </div>
-        </div>        
+        </div>
         <div class="fecha">
           <label for="date_range">Date Range:</label>
           <select id="date_range" name="date_range">
@@ -52,40 +64,76 @@
         </div>
         <button id="apply-filters-btn" type="submit">Filter</button>
       </form>
-      <table>
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Due Date</th>
-            <th>State</th>
-            <th>Tags</th>
-            <th>Users</th>
-            <th>Creation Date</th>
-            <th>mes</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for task in tasks %}
-          <tr>
-            <td>{{ task.title }}</td>
-            <td>{{ task.description }}</td>
-            <td>{{ task.due_date }}</td>
-            <td>{{ task.get_state_display }}</td>
-            <td>{% for tag in task.tags.all %} {{ tag.name }} {% endfor %}</td>
-            <td>
-              {% for user in task.users.all %} {{ user.username }} {% endfor %}
-            </td>
-            <td>{{ task.creation_date }}</td>
-            <td>{{ task.due_date.month }}</td>
-          </tr>
-          {% empty %}
-          <tr>
-            <td colspan="9">No tasks found</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-  </div>
+      {% if object_list %}
+      <ul class="task-container">
+        {% for task in object_list %} {% if task.tags.all %}
+        <li
+          class="tasks"
+          style="border-left: 10px solid {{ task.tags.first.color }};"
+        >
+          <div class="task-info">
+            <strong>{{ task.title }}</strong><br />
+            Descripción: {{ task.description }}<br />
+            Fecha de vencimiento: {{ task.due_date }}<br />
+            Tags:{% for tag in task.tags.all %}
+            {{ tag.name }}
+            {% if not forloop.last %},{% endif %}
+            {% endfor %}
+          </div>
+          <div class="task-options">
+            <button class="shareTaskBtn" data-task-id="{{ task.id }}">
+              <i class="bx bxs-share"></i>
+            </button>
+            <button class="updateTaskBtn" data-task-id="{{ task.id }}">
+              <i class="bx bxs-pencil"></i>
+            </button>
+            <button class="deleteTaskBtn" data-task-id="{{ task.id }}">
+              <i class="bx bxs-trash-alt"></i>
+            </button>
+          </div>
+        </li>
+        {% else %}
+        <li class="tasks">
+          <div class="task-info">
+            <strong>{{ task.title }}</strong><br />
+            Descripción: {{ task.description }}<br />
+            Fecha de vencimiento: {{ task.due_date }}
+          </div>
+          <div class="task-options">
+            <button class="shareTaskBtn" data-task-id="{{ task.id }}">
+              <i class="bx bxs-share"></i>
+            </button>
+            <button class="updateTaskBtn" data-task-id="{{ task.id }}">
+              <i class="bx bxs-pencil"></i>
+            </button>
+            <button class="deleteTaskBtn" data-task-id="{{ task.id }}">
+              <i class="bx bxs-trash-alt"></i>
+            </button>
+          </div>
+        </li>
+        {% endif %} {% endfor %}
+        <div class="pagination">
+          <span class="step-links">
+              {% if page_obj.has_previous %}
+              <a class="pagination-link" href="{% url 'task_list' %}?page=1">&laquo; first</a>
+              <a class="pagination-link" href="{% url 'task_list' %}?page={{ page_obj.previous_page_number }}">previous</a>
+
+              {% endif %}
+      
+              <span class="current">
+                  Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+              </span>
+      
+              {% if page_obj.has_next %}
+              <a class="pagination-link" href="{% url 'task_list' %}?page={{ page_obj.next_page_number }}">next</a>
+              <a class="pagination-link" href="{% url 'task_list' %}?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+              {% endif %}
+          </span>
+        </div>
+      </ul>
+      {% else %}
+      <p>No hay tareas para hoy</p>
+      {% endif %}
+    </div>
   </body>
 </html>
