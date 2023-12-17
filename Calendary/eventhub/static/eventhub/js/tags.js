@@ -1,5 +1,7 @@
 var modal = document.getElementById("myModal");
 var createTagBtn = document.getElementById("createTagBtn")
+var updateTagBtn = document.querySelectorAll(".updateTagBtn")
+var deleteTagBtn = document.querySelectorAll(".deleteTagBtn")
 
 function loadModal(view, closeBtnSelector) {
       $.ajax({
@@ -26,3 +28,19 @@ function loadModal(view, closeBtnSelector) {
 createTagBtn.onclick = function () {
         loadModal("/eventhub/create_tag/", ".modal-content .close");
 }
+
+updateTagBtn.forEach(function(element){
+  element.onclick = function() {
+    var tagId = element.getAttribute("data-tag-id")
+    url = "/eventhub/update_tag/" + tagId + "/"
+    loadModal(url, ".modal-content .close")
+  }
+})
+
+deleteTagBtn.forEach(function(element){
+  element.onclick = function() {
+    var tagId = element.getAttribute("data-tag-id")
+    url = "/eventhub/delete_tag/" + tagId + "/"
+    loadModal(url, ".modal-content .close")
+  }
+})

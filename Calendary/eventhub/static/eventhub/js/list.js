@@ -36,7 +36,7 @@ deleteTaskBtn.forEach(function(element){
 uptdateTaskBtn.forEach(function(element) {
   element.onclick = function () {
     var taskId = element.getAttribute("data-task-id")
-    url = "/eventhub/uptate_task/" + taskId + "/"
+    url = "/eventhub/update_task/" + taskId + "/"
     loadModal(url, ".modal-content .close")
   }
 })

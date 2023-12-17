@@ -1,4 +1,4 @@
-from .views import CreateTagView, CreateTasksView, DeleteTasksView, ListTagsView, ListTasksView, TaskListView, UpdateTasksView, CalendarView
+from .views import CreateTagView, CreateTasksView, DeleteTagView, DeleteTasksView, ListTagsView, ListTasksView, TaskListView, UpdateTagView, UpdateTasksView, CalendarView
 from django.urls import path
 
 urlpatterns = [
@@ -6,9 +6,11 @@ urlpatterns = [
     path('tasks/', TaskListView.as_view(), name='task_list'),
     path('calendar/<int:year>/<int:month>/', CalendarView.as_view(), name='calendar'),
     path("create_task/", CreateTasksView.as_view(), name="create task"),
-    path("uptate_task/<int:pk>/", UpdateTasksView.as_view(), name="update task"),
+    path("update_task/<int:pk>/", UpdateTasksView.as_view(), name="update task"),
     path("delete_task/<int:pk>/", DeleteTasksView.as_view(), name="delete task"),
 
     path("list_tags/", ListTagsView.as_view(), name="list tags"),
     path("create_tag/", CreateTagView.as_view(), name="create tag"),
+    path("update_tag/<int:pk>/", UpdateTagView.as_view(), name="update tag"),
+    path("delete_tag/<int:pk>/", DeleteTagView.as_view(), name="delete tag"),
 ]
