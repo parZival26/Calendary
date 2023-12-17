@@ -1,17 +1,20 @@
-
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models.base import Model as Model
 from django.http import Http404, JsonResponse
 from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.views.generic import ListView, TemplateView
+from django.views.generic import ListView, TemplateView, DetailView
 from django.core.exceptions import PermissionDenied
 from .models import Tag, Task
+from django.contrib.sites.shortcuts import get_current_site
 from .forms import TagForm, TaskForm
 from calendar import SUNDAY, month, monthcalendar, setfirstweekday
 from datetime import date, datetime, timedelta
 from django.utils import timezone
 from django.contrib import messages
 from .utils import send_email
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
 
 class CalendarView(LoginRequiredMixin, TemplateView):
     template_name = 'eventhub/calendar.html'
@@ -57,6 +60,7 @@ class ListTasksView(LoginRequiredMixin, ListView):
 
         # Filtrar las tareas por usuario, año, mes y día
         return Task.objects.filter(users=self.request.user, due_date__range=(start_date, end_date))    
+
 class TaskListView(LoginRequiredMixin, ListView):
     model = Task
     template_name = 'task_list.html'
@@ -106,7 +110,6 @@ class TaskListView(LoginRequiredMixin, ListView):
         context['tags'] = Tag.objects.filter(users=self.request.user)
         return context
         
-
 class CreateTasksView(LoginRequiredMixin, CreateView):
     template_name = "eventhub/form.html"
     form_class = TaskForm
@@ -237,3 +240,86 @@ class CreateTagView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         messages.success(self.request, 'Etiqueta creada exitosamente')
         return reverse_lazy('list tags')
+    
+class UpdateTagView(LoginRequiredMixin, UpdateView):
+    template_name = "eventhub/form.html"
+    form_class = TagForm
+    model = Tag
+    success_url = 'list tags'
+
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        # Verificar si el usuario tiene acceso al objeto
+        if obj.users.filter(pk=self.request.user.pk).exists():
+            return obj
+        else:
+            raise PermissionDenied("No tienes permisos para acceder a esta Etiqueta.")
+
+    def get_context_data(self, **kwargs): 
+        context = super().get_context_data(**kwargs)
+        tag_id = self.kwargs.get('pk')
+        context['title'] = "Actualizar Etiqueta"
+        context['form_action'] = reverse('update tag', kwargs={'pk': tag_id })
+        context['id'] = 'updateTagForm'
+        return context
+    
+    def form_valid(self, form):
+        self.object = form.save()
+        response_data = {'message': 'Etiqueta Actualizada exitosamente'}
+        return JsonResponse(response_data)
+
+    def form_invalid(self, form):
+        response_data = {'message': 'Hubo un error al actualizar la Etiqueta'}
+        return JsonResponse(response_data, status=400)
+    
+class DeleteTagView(LoginRequiredMixin, DeleteView):
+    template_name = "eventhub/form.html"
+    model = Tag
+    success_url = 'list tags'
+
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        if obj.users.filter(pk=self.request.user.pk).exists():
+            return obj 
+        else:
+            raise PermissionDenied("No tienes permisos para acceder a esta Etiqueta.")
+        
+    def get_context_data(self, **kwargs):
+        context =  super().get_context_data(**kwargs)
+        tag_id = self.kwargs.get('pk')
+        context['title'] = "Eliminar Etiqueta"
+        context['form_action'] = reverse('delete tag', kwargs={'pk': tag_id})
+        context['id'] = 'deleteTagForm'
+        return context
+    
+    def form_valid(self, form):
+        self.get_object().delete()
+        response_data = {'message': 'Etiqueta eliminada exitosamente'}
+        return JsonResponse(response_data)
+
+    def form_invalid(self, form):
+        response_data = {'message': 'Hubo un error al eliminada la Etiqueta'}
+        return JsonResponse(response_data, status=400)
+        
+
+class ShareTaskView(LoginRequiredMixin, DetailView):
+    model = Task
+    template_name = 'eventhub/share_task.html'
+
+    def get(self, request, *args, **kwargs):
+        task = self.get_object()
+        current_site = get_current_site(request)
+        domain = current_site.domain
+        shared_link = request.build_absolute_uri(reverse('share_task_with_user', kwargs={'pk': task.pk}))
+
+        return render(request, self.template_name, {'task': task, 'shared_link': shared_link, 'domain': domain})
+    
+@login_required
+def share_task_with_user(request, pk):
+    task = get_object_or_404(Task, pk=pk)
+    
+    # Agrega el usuario actual a la lista de usuarios compartidos
+    task.users.add(request.user)
+    
+    # Redirige a la página de compartir tarea
+    return redirect('share_task', pk=pk)

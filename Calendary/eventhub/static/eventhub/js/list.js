@@ -1,6 +1,7 @@
 var modal = document.getElementById("myModal");
 var deleteTaskBtn = document.querySelectorAll(".deleteTaskBtn")
 var uptdateTaskBtn = document.querySelectorAll(".updateTaskBtn")
+var shareTaskBtn = document.querySelectorAll(".shareTaskBtn")
 
 
 function loadModal(view, closeBtnSelector) {
@@ -18,6 +19,19 @@ function loadModal(view, closeBtnSelector) {
                 modal.style.display = "none";
               };
             }
+
+            var copyLinkBtn = document.querySelector(".copyLinkBtn");
+            if (copyLinkBtn) {
+              copyLinkBtn.onclick = function() {
+                var taskLink = this.getAttribute("data-link");
+                navigator.clipboard.writeText(taskLink).then(function() {
+                  console.log('Copying to clipboard was successful!');
+                }, function(err) {
+                  console.error('Could not copy text: ', err);
+                });
+              };
+            }
+
           },
           error: function() {
             console.log("Error al cargar la vista");
@@ -36,7 +50,15 @@ deleteTaskBtn.forEach(function(element){
 uptdateTaskBtn.forEach(function(element) {
   element.onclick = function () {
     var taskId = element.getAttribute("data-task-id")
-    url = "/eventhub/uptate_task/" + taskId + "/"
+    url = "/eventhub/update_task/" + taskId + "/"
+    loadModal(url, ".modal-content .close")
+  }
+})
+
+shareTaskBtn.forEach(function(element){
+  element.onclick=function() {
+    var taskId = element.getAttribute("data-task-id")
+    url = "/eventhub/task/" + taskId + "/share/"
     loadModal(url, ".modal-content .close")
   }
 })
