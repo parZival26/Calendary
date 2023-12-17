@@ -1,4 +1,3 @@
-
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;800&display=swap");
 
 body {
@@ -30,7 +29,8 @@ body {
   display: flex;
   justify-content: center;
   margin-top: 20px;
-  width: 80%; /* Ajuste del ancho al 80% */
+  width: 80%;
+  /* Ajuste del ancho al 80% */
 }
 
 .calendar {
@@ -83,15 +83,15 @@ body {
 }
 
 .day-header {
-    font-weight: 500;
-    background-color: rgba(94, 94, 94, 0.25);
-    border-radius: 10px;
-    text-align: center;
+  font-weight: 500;
+  background-color: rgba(94, 94, 94, 0.25);
+  border-radius: 10px;
+  text-align: center;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 
 .empty-day {
@@ -101,185 +101,201 @@ body {
 
 
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  }
+  display: none;
+  /* Hidden by default */
+  position: fixed;
+  /* Stay in place */
+  z-index: 1;
+  /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0);
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* Black w/ opacity */
+}
 
-  .infor {
-    display: flex;
-    border-collapse: collapse;
-  }
-  
-  .modal-content {
-    border-radius: 10px;
-    background-color: #fefefe;
-    margin: 5% auto; 
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%; 
-  }
+.infor {
+  display: flex;
+  border-collapse: collapse;
+}
 
-  .modal-content form {
-    background-color: rgb(255, 255, 255);
-    width: 20%;
-    margin: 10px;
-  }
-  
-  .modal-content form div {
-    padding: 4px;
-    display: flex;
-    margin: 5px;
-    align-items: center; 
-    width: 100%;
-    box-sizing: border-box;
+.modal-content {
+  border-radius: 10px;
+  background-color: #fefefe;
+  margin: 5% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
 
-  }
+.modal-content form {
+  background-color: rgb(255, 255, 255);
+  width: 20%;
+  margin: 10px;
+}
 
-  .opState {
-    flex-direction: column;
-    background-color: #dedede;
-    border-radius: 10px;
-  }
-  
-  .cuadrosState {
-    flex-direction: column;
-    width: 60%;
-  }
-  
-  .opTags {
-    flex-direction: column;
-    background-color: #dedede;
-    border-radius: 10px;
-  }
-  
-  .cuadrosTags {
-    flex-direction: column;
-  }
-  
-  .modal-content form button {
-    display: block;
-    margin: 0 auto;
+.modal-content form div {
+  padding: 4px;
+  display: flex;
+  margin: 5px;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+
+}
+
+.opState {
+  flex-direction: column;
+  background-color: #dedede;
+  border-radius: 10px;
+}
+
+.cuadrosState {
+  flex-direction: column;
+  width: 60%;
+}
+
+.opTags {
+  flex-direction: column;
+  background-color: #dedede;
+  border-radius: 10px;
+}
+
+.cuadrosTags {
+  flex-direction: column;
+}
+
+.modal-content form button {
+  display: block;
+  margin: 0 auto;
   width: 70%;
   padding: 12px;
   font-size: 14px;
-  }
+}
 
-  .modal-content table {
-    border-collapse: collapse; 
-    width: 80%;
-  }
-  
-  .modal-content table thead th {
-    padding: 10px;
-    border: 1px solid rgb(126, 126, 126); 
-  }
-  
-  .modal-content table tbody td {
-    padding: 10px;
-    border: 1px solid rgb(126, 126, 126); 
-  }
-  
-  .fecha {
-    background-color: #dedede;
-    border-radius: 10px;
-  }
+.modal-content table {
+  border-collapse: collapse;
+  width: 80%;
+}
 
-  .intervalo {
-    background-color: #dedede;
-    border-radius: 10px;
-  }
+.modal-content table thead th {
+  padding: 10px;
+  border: 1px solid rgb(126, 126, 126);
+}
+
+.modal-content table tbody td {
+  padding: 10px;
+  border: 1px solid rgb(126, 126, 126);
+}
+
+.fecha {
+  background-color: #dedede;
+  border-radius: 10px;
+}
+
+.intervalo {
+  background-color: #dedede;
+  border-radius: 10px;
+}
 
 .modal-title-bar h2 {
-    height: 80%;
+  height: 80%;
 }
-  
-  /* The Close Button */
-  .close {
-    margin: 5px;
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-  }
-  
-  .close:hover,
-  .close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-  }
 
-  .create {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    margin: 5px;
-  }
+/* The Close Button */
+.close {
+  margin: 5px;
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
 
-  .create:hover,
-  .create:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-  }
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
 
-  .actions {
-    display: flex;
-    justify-content: space-between;
-  }
+.create {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  margin: 5px;
+}
 
-  .modal-title-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center; 
-    padding: 10px;
-    border-bottom: 1px solid #ccc
-  }
+.create:hover,
+.create:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
 
-  .tasks {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start; 
-    border: 1px solid #ccc;
-    border-left: 10px solid #ccc;
-    padding: 10px;
-    margin-bottom: 20px;
-  }
-  .task-info {
-      flex: 1;
-  }
-  .task-options {
-      display: flex;
-      align-items: center;
-  }
-  .task-options button {
-      margin-left: 10px; 
-      background-color: transparent;
-      color: #aaa;
-      border: none;
-      cursor: pointer;
-  }
-  .task-options button :hover{
-    color: black;
-  }
+.actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal-title-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ccc
+}
+
+.tasks {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border: 1px solid #ccc;
+  border-left: 10px solid #ccc;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.task-container {
+  width: 100%;
+}
+
+.task-info {
+  flex: 1;
+}
+
+.task-options {
+  display: flex;
+  align-items: center;
+}
+
+.task-options button {
+  margin-left: 10px;
+  background-color: transparent;
+  color: #aaa;
+  border: none;
+  cursor: pointer;
+}
+
+.task-options button :hover {
+  color: black;
+}
 
 .todo {
   display: flex;
 }
 
 .Botareas {
-  
+
   width: 200px;
-  
+
 }
 
 .Botareas button {
@@ -298,7 +314,7 @@ body {
 .Botareas button:hover {
   background-color: rgba(36, 153, 199, 0.25);
   font-size: 18px;
-  
+
 }
 
 #createTaskBtn {
@@ -307,29 +323,29 @@ body {
 }
 
 .form_inputs {
-    background-color: rgb(255, 255, 255);
-    color: rgb(0, 0, 0);
-    border: 1px solid rgb(0, 0, 0);
-    border-radius: 4px;
-    width: 100%;
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+  border: 1px solid rgb(0, 0, 0);
+  border-radius: 4px;
+  width: 100%;
 }
 
 label {
-    font-size: 15px;
-    margin-top: 0px;
+  font-size: 15px;
+  margin-top: 0px;
 }
 
 #createTaskForm {
-    width: 50%;
-  }
-  
+  width: 50%;
+}
+
 #createTaskForm button {
-  display: block; 
+  display: block;
   margin: 0 auto;
   width: 30%;
   padding: 10px;
   font-size: 15px;
-  }
+}
 
 #id_tags {
   width: 100%;
@@ -338,7 +354,7 @@ label {
 
 #id_tags label {
   display: flex;
-  align-items: center; 
+  align-items: center;
 }
 
 #id_tags input {
