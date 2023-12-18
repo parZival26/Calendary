@@ -9,11 +9,23 @@ copyButtons.forEach(function (button) {
 
         console.log('Button clicked, taskId: ' + taskId + ', taskLink: ' + taskLink);
 
-        // Copia el enlace al portapapeles
-        navigator.clipboard.writeText(taskLink).then(function() {
-            console.log('Copying to clipboard was successful!');
-        }, function(err) {
+        var tempInput = document.createElement('input');
+        tempInput.style = 'position: absolute; left: -1000px; top: -1000px';
+        tempInput.value = taskLink;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+
+        // Copia el texto al portapapeles
+        try {
+            var successful = document.execCommand('copy');
+            var msg = successful ? 'successful' : 'unsuccessful';
+            console.log('Copying text command was ' + msg);
+            alert('Enlace copiado al portapapeles para la tarea con ID ' + taskId);
+        } catch (err) {
             console.error('Could not copy text: ', err);
-        });
+        }
+
+        // Elimina el elemento de entrada temporal
+        document.body.removeChild(tempInput);
     });
 });
