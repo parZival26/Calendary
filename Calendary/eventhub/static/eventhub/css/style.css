@@ -102,28 +102,19 @@ body {
 
 .modal {
   display: none;
-  /* Hidden by default */
   position: fixed;
-  /* Stay in place */
   z-index: 1;
-  /* Sit on top */
   left: 0;
   top: 0;
   width: 100%;
-  /* Full width */
   height: 100%;
-  /* Full height */
   overflow: auto;
-  /* Enable scroll if needed */
   background-color: rgb(0, 0, 0);
-  /* Fallback color */
   background-color: rgba(0, 0, 0, 0.4);
-  /* Black w/ opacity */
 }
 
 .infor {
   display: flex;
-  border-collapse: collapse;
 }
 
 .modal-content {
@@ -139,6 +130,8 @@ body {
   background-color: rgb(255, 255, 255);
   width: 20%;
   margin: 10px;
+  padding: 10px;
+  border-right: 1px #ccc solid;
 }
 
 .modal-content form div {
@@ -153,8 +146,6 @@ body {
 
 .opState {
   flex-direction: column;
-  background-color: #dedede;
-  border-radius: 10px;
 }
 
 .cuadrosState {
@@ -164,12 +155,36 @@ body {
 
 .opTags {
   flex-direction: column;
-  background-color: #dedede;
-  border-radius: 10px;
 }
 
 .cuadrosTags {
   flex-direction: column;
+}
+
+.fecha label {
+  padding: 0px 5px 0px 0px;
+}
+
+#date_interval {
+  padding: 5px;
+}
+
+.pagination-link {
+  background-color: rgb(206, 206, 206);
+  text-decoration: none;
+  border-radius: 5px;
+  color: rgb(0, 0, 0);
+  padding: 10px;
+  margin: 5px;
+}
+
+.pagination-link:hover {
+  background-color: rgb(125, 125, 125);
+  text-decoration: none;
+  border-radius: 5px;
+  color: white;
+  padding: 10px;
+  margin: 5px;
 }
 
 .modal-content form button {
@@ -193,16 +208,6 @@ body {
 .modal-content table tbody td {
   padding: 10px;
   border: 1px solid rgb(126, 126, 126);
-}
-
-.fecha {
-  background-color: #dedede;
-  border-radius: 10px;
-}
-
-.intervalo {
-  background-color: #dedede;
-  border-radius: 10px;
 }
 
 .modal-title-bar h2 {
@@ -328,6 +333,8 @@ body {
   border: 1px solid rgb(0, 0, 0);
   border-radius: 4px;
   width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 label {
