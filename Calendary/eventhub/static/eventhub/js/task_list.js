@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!$('form').data('eventAttached')) {
       $(document).on('submit', 'form', function (e) {
         e.preventDefault();
+        e.stopPropagation();
 
         var formData = $(this).serialize();
 
@@ -52,6 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!$(document).data('paginationEventAttached')) {
       $(document).on('click', '.pagination-link', function (event) {
         event.preventDefault();
+        event.stopPropagation();
         var url = $(this).attr('href');
 
         // Obtener parámetros de filtro del formulario
