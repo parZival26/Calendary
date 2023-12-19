@@ -173,6 +173,11 @@ class UpdateTasksView(LoginRequiredMixin, UpdateView):
             return obj
         else:
             raise PermissionDenied("No tienes permisos para acceder a esta tarea.")
+    
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
 
     def form_valid(self, form):
         self.object = form.save()
