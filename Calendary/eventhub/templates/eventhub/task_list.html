@@ -115,9 +115,8 @@
         <div class="pagination">
           <span class="step-links">
               {% if page_obj.has_previous %}
-              <a class="pagination-link" href="{% url 'task_list' %}?page=1">&laquo; first</a>
-              <a class="pagination-link" href="{% url 'task_list' %}?page={{ page_obj.previous_page_number }}">previous</a>
-
+                  <a class="pagination-link" href="{% url 'task_list' %}?page=1{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">&laquo; first</a>
+                  <a class="pagination-link" href="{% url 'task_list' %}?page={{ page_obj.previous_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">previous</a>
               {% endif %}
       
               <span class="current">
@@ -125,11 +124,11 @@
               </span>
       
               {% if page_obj.has_next %}
-              <a class="pagination-link" href="{% url 'task_list' %}?page={{ page_obj.next_page_number }}">next</a>
-              <a class="pagination-link" href="{% url 'task_list' %}?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                  <a class="pagination-link" href="{% url 'task_list' %}?page={{ page_obj.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">next</a>
+                  <a class="pagination-link" href="{% url 'task_list' %}?page={{ page_obj.paginator.num_pages }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">last &raquo;</a>
               {% endif %}
           </span>
-        </div>
+      </div>
       </ul>
       {% else %}
       <p>No hay tareas para hoy</p>
