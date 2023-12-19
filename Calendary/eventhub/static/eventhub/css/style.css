@@ -20,6 +20,34 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav-calendar {
+  font-size: 1rem;
+  width: 5rem;
+  height: 5rem;
+  font-weight: 300;
+  font-size: 1rem;
+  box-sizing: border-box;
+  background: rgba(196, 195, 195, 0.25);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  text-decoration: none;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.nav-calendar i {
+  color: rgb(0, 0, 0);
+}
+
+
 #calendar-view:hover {
   background-color: rgba(36, 153, 199, 0.25);
 }

@@ -5,13 +5,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="{% static "eventhub/css/style.css" %}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script src="{% static "eventhub/js/modal.js" %}"></script>
     <script src="{% static "eventhub/js/task_list.js" %}"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <title>Calendario</title>
   </head>
   <body>
-    <button class="ButCalendario" id="calendar-view"><h2>{{ month_name }} {{ year }} Calendar</h2></button>
+    <div class="header">
+      <a class="nav-calendar" href="{% url 'calendar' year=prev_year month=prev_month %}"><i class='bx bx-chevron-left'></i></a>
+      <button class="ButCalendario" id="calendar-view"><h2>{{ month_name }} {{ year }} Calendar</h2></button>
+      <a class="nav-calendar" href="{% url 'calendar' year=next_year month=next_month %}"><i class='bx bx-chevron-right' ></i></a>
+    </div>
     <div class="todo">
       <div class="Botareas">
         <button id="createTaskBtn">Create Task</button>

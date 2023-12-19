@@ -36,6 +36,24 @@ class CalendarView(LoginRequiredMixin, TemplateView):
         context['month_name'] = month_name
         context['year'] = year
 
+        prev_month = month - 1
+        prev_year = year
+        if prev_month == 0:
+            prev_month = 12
+            prev_year -= 1
+
+        # Calcular el mes siguiente
+        next_month = month + 1
+        next_year = year
+        if next_month == 13:
+            next_month = 1
+            next_year += 1
+
+        context['prev_month'] = prev_month
+        context['prev_year'] = prev_year
+        context['next_month'] = next_month
+        context['next_year'] = next_year
+
         return context
 
 class ListTasksView(LoginRequiredMixin, ListView):
