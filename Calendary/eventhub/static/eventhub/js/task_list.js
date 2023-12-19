@@ -3,44 +3,25 @@ document.addEventListener("DOMContentLoaded", function () {
   var taskslistBtn = document.getElementById("taskslistBtn");
 
   function attachFormSubmitEvent() {
-    var form = document.querySelector('form');
-    form.onsubmit = function (e) {
-      e.preventDefault();
+    if (!$('form').data('eventAttached')) {
+      $(document).on('submit', 'form', function (e) {
+        e.preventDefault();
 
-      // Aquí puedes hacer la petición AJAX para filtrar los datos
-      var stateInputs = document.querySelectorAll('input[name="state"]:checked');
-      var tagsInputs = document.querySelectorAll('input[name="tags"]:checked');
-      var dateRangeInput = document.querySelector('select[name="date_range"]');
-      var dateIntervalInput = document.querySelector('input[name="date_interval"]');
+        var formData = $(this).serialize();
 
-      var state = Array.from(stateInputs).map(input => input.value);
-      var tags = Array.from(tagsInputs).map(input => input.value);
-      var date_range = dateRangeInput ? dateRangeInput.value : null;
-      var date_interval = dateIntervalInput ? dateIntervalInput.value : null;
-
-      var data = {
-        state: state,
-        tags: tags,
-        date_range: date_range,
-        date_interval: date_interval
-      };
-
-      $.ajax({
-        url: '/eventhub/tasks/',
-        type: 'GET',
-        data: $.param(data, true),  // Serializar los datos del formulario
-        success: function (data) {
-          // Actualizar la vista con los datos filtrados
-          $(".modal-content").html(data);
-
-          // Adjuntar el evento onsubmit al nuevo formulario
-          attachFormSubmitEvent();
-        },
-        error: function () {
-          console.log("Error al filtrar los datos");
-        }
-      });
-    };
+        $.ajax({
+          url: '/eventhub/tasks/',
+          type: 'GET',
+          data: formData,
+          success: function (data) {
+            $(".modal-content").html(data);
+          },
+          error: function () {
+            console.log("Error al filtrar los datos");
+          }
+        });
+      }).data('eventAttached', true);
+    }
   }
 
   function loadModal(view, closeBtnSelector) {
@@ -51,7 +32,6 @@ document.addEventListener("DOMContentLoaded", function () {
         $(".modal-content").html(data);
         modal.style.display = "block";
 
-        // Agregar el evento onclick al span de cierre dentro del contenido cargado
         var closeBtn = document.querySelector(closeBtnSelector);
         if (closeBtn) {
           closeBtn.onclick = function () {
@@ -59,10 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
           };
         }
 
-        // Adjuntar el evento onsubmit al formulario
         attachFormSubmitEvent();
-
-        // Adjuntar el evento de clic a los enlaces de paginación
         attachPaginationClickEvent();
       },
       error: function () {
@@ -72,18 +49,27 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function attachPaginationClickEvent() {
-    var paginationLinks = document.querySelectorAll('.pagination-link');
-    paginationLinks.forEach(function (link) {
-      link.addEventListener('click', function (event) {
+    if (!$(document).data('paginationEventAttached')) {
+      $(document).on('click', '.pagination-link', function (event) {
         event.preventDefault();
+        var url = $(this).attr('href');
 
-        // Cargar la página correspondiente en el modal
-        loadModal(this.getAttribute('href'), ".modal-content .close");
-      });
-    });
+        // Obtener parámetros de filtro del formulario
+        var formData = $('form').serialize();
+
+        // Agregar parámetros de filtro a la URL de paginación
+        if (url.indexOf('?') !== -1) {
+          url += '&' + formData;
+        } else {
+          url += '?' + formData;
+        }
+
+        loadModal(url, ".modal-content .close");
+      }).data('paginationEventAttached', true);
+    }
   }
 
   taskslistBtn.onclick = function () {
-    loadModal("/eventhub/tasks/", ".modal-content .close")
+    loadModal("/eventhub/tasks/", ".modal-content .close");
   }
 });
