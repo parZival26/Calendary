@@ -16,7 +16,7 @@
     </div>
     <form method="POST" action="{{ form_action }}" id="{{ id }}">
       {% csrf_token %} {{ form.as_p }}
-      <button type="submit" onclick="submitFormAndCloseModal('{{ id }}', event)">Create</button>
+      <button type="submit" onclick="submitFormAndCloseModal('{{ id }}', event)" id="submit-button">Create</button>
     </form>
   </body>
 </html>

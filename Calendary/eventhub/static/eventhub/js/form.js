@@ -2,6 +2,7 @@ var modal = document.getElementById("myModal");
 
 function submitFormAndCloseModal(formId, event) {
   event.preventDefault();  // Evitar la presentación predeterminada del formulario
+  document.getElementById("submit-button").disabled = true;
 
   // Realizar la solicitud AJAX
   $.ajax({
