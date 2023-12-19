@@ -26,7 +26,7 @@ class TaskForm(forms.ModelForm):
             field.widget.attrs["class"] = "form_inputs" 
         
         # Establecer el atributo 'class' para el widget de fecha
-        self.fields['due_date'].widget = forms.DateTimeInput(format='%d/%m/%Y %H:%M', attrs={'type': 'datetime-local'})
+        self.fields['due_date'].widget = forms.DateTimeInput(format='%Y-%m-%dT%H:%M', attrs={'type': 'datetime-local'})
         self.fields['due_date'].widget.attrs['class'] = 'datepicker'
         
         # Crear un objeto FormHelper
